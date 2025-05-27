@@ -21,3 +21,5 @@ let init height width init_fn =
     width;
     height;
   }
+
+let make height width x = init height width (fun _ _ -> x)
