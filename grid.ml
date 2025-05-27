@@ -23,3 +23,8 @@ let init height width init_fn =
   }
 
 let make height width x = init height width (fun _ _ -> x)
+
+let of_array_of_arrays arrays =
+  let height = Array.length arrays in
+  let width = Array.length arrays.(0) in
+  init height width (fun y x -> arrays.(y).(x))

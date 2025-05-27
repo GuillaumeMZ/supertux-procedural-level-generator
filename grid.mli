@@ -5,3 +5,6 @@ val init: int -> int -> (int -> int -> 'a) -> 'a grid
 
 (** make h w x initializes a grid of height h, of width w, with each element of the grid being x. *)
 val make: int -> int -> 'a -> 'a grid
+
+(** of_array_of_arrays arrays initializes a grid from arrays, an array of arrays. *)
+val of_array_of_arrays: 'a array array -> 'a grid
