@@ -1,2 +1,3 @@
 (executable
- (name splg))
+ (name splg)
+ (modules splg grid))
