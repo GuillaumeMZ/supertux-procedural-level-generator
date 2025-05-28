@@ -28,3 +28,16 @@ let of_array_of_arrays arrays =
   let height = Array.length arrays in
   let width = Array.length arrays.(0) in
   init height width (fun y x -> arrays.(y).(x))
+
+let height grid = grid.height
+
+let width grid = grid.width
+
+let inside y x grid = y >= 0 && y < grid.height && x >= 0 && x < grid.width
+
+let fold f accumulator grid =
+  let rec fold' y x accumulator' =
+    if y = height grid then accumulator'
+    else if x = width grid then fold' (y + 1) 0 accumulator'
+    else fold' y (x + 1) (f y x accumulator' grid.inner_array.(y * grid.width + x))
+  in fold' 0 0 accumulator
