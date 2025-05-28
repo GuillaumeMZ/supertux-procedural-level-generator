@@ -1,4 +1,4 @@
-type tile =
+type t =
   | Air
   | SnowLayerLeft
   | SnowLayerMiddle

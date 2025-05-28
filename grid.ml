@@ -1,4 +1,4 @@
-type 'a grid = {
+type 'a t = {
   inner_array: 'a array;
   width: int;
   height: int;
