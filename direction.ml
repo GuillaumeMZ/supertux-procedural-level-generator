@@ -8,7 +8,7 @@ type t =
   | West
   | NorthWest
 
-let direction_of_tile = function
+let to_int = function
   | North -> 0
   | NorthEast -> 1
   | East -> 2
@@ -18,9 +18,9 @@ let direction_of_tile = function
   | West -> 6
   | NorthWest -> 7
 
-let compare direction1 direction2 = Int.compare (direction_of_tile direction1) (direction_of_tile direction2)
+let compare direction1 direction2 = Int.compare (to_int direction1) (to_int direction2)
 
-let offset_of_direction = function
+let to_offset = function
   | North -> (-1, 0)
   | NorthEast -> (-1, 1)
   | East -> (0, 1)
