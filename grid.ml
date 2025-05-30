@@ -41,3 +41,7 @@ let fold f accumulator grid =
     else if x = width grid then fold' (y + 1) 0 accumulator'
     else fold' y (x + 1) (f y x accumulator' grid.inner_array.(y * grid.width + x))
   in fold' 0 0 accumulator
+
+let get y x grid = grid.inner_array.(y * grid.width + x)
+
+let get_opt y x grid = if inside x y grid then Some (grid.inner_array.(y * grid.width + x)) else None

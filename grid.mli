@@ -19,3 +19,7 @@ val width: 'a t -> int
 val inside: int -> int -> 'a t -> bool
 
 val fold: (int -> int -> 'b -> 'a -> 'b) -> 'b -> 'a t -> 'b
+
+val get: int -> int -> 'a t -> 'a
+
+val get_opt: int -> int -> 'a t -> 'a option
