@@ -29,3 +29,18 @@ let int_of_tile = function
   | SnowBottomRight -> 12
 
 let compare tile1 tile2 = Int.compare (int_of_tile tile1) (int_of_tile tile2)
+
+let to_string = function
+  | Air -> "Air"
+  | SnowLayerLeft -> "SnowLayerLeft"
+  | SnowLayerMiddle -> "SnowLayerMiddle"
+  | SnowLayerRight -> "SnowLayerRight"
+  | SnowGroundLeft -> "SnowGroundLeft"
+  | SnowGroundMiddle -> "SnowGroundMiddle"
+  | SnowGroundRight -> "SnowGroundRight"
+  | SnowWallLeft -> "SnowWallLeft"
+  | SnowInner -> "SnowInner"
+  | SnowWallRight -> "SnowWallRight"
+  | SnowBottomLeft -> "SnowBottomLeft"
+  | SnowBottomMiddle -> "SnowBottomMiddle"
+  | SnowBottomRight -> "SnowBottomRight"

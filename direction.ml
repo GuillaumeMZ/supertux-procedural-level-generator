@@ -31,3 +31,13 @@ let to_offset = function
   | NorthWest -> (-1, -1)
 
 let all = [North; NorthEast; East; SouthEast; South; SouthWest; West; NorthWest;]
+
+let to_string = function
+  | North -> "North"
+  | NorthEast -> "NorthEast"
+  | East -> "East"
+  | SouthEast -> "SouthEast"
+  | South -> "South"
+  | SouthWest -> "SouthWest"
+  | West -> "West"
+  | NorthWest -> "NorthWest"
