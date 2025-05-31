@@ -13,7 +13,7 @@ type t =
   | SnowBottomMiddle
   | SnowBottomRight
 
-let int_of_tile = function
+let to_int = function
   | Air -> 0
   | SnowLayerLeft -> 1
   | SnowLayerMiddle -> 2
@@ -28,7 +28,7 @@ let int_of_tile = function
   | SnowBottomMiddle -> 11
   | SnowBottomRight -> 12
 
-let compare tile1 tile2 = Int.compare (int_of_tile tile1) (int_of_tile tile2)
+let compare tile1 tile2 = Int.compare (to_int tile1) (to_int tile2)
 
 let to_string = function
   | Air -> "Air"
