@@ -18,8 +18,8 @@ val width: 'a t -> int
 (** [inside y x grid] returns [true] if (x; y) are valid coordinates, [false] otherwise. *)
 val inside: int -> int -> 'a t -> bool
 
-val fold: (int -> int -> 'b -> 'a -> 'b) -> 'b -> 'a t -> 'b
-
+(** [get y x grid] returns the contents of the cell at (x; y). Raises an exception if the coordinates are invalid. *)
 val get: int -> int -> 'a t -> 'a
 
+(** [get_opt y x grid] returns the contents of the cell at (x; y) wrapped in an option. Returns None if the coordinates are invalid. *)
 val get_opt: int -> int -> 'a t -> 'a option
