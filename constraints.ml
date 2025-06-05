@@ -12,9 +12,7 @@ end
 
 module ConstraintMap = Map.Make(ConstraintKey)
 
-module TileSet = Set.Make(Tile)
-
-type t = TileSet.t ConstraintMap.t
+type t = Tileset.t ConstraintMap.t
 
 let empty (): t = ConstraintMap.empty
 
@@ -23,9 +21,9 @@ let add_constraint constraints source_tile direction destination_tile =
   let new_set =
     if ConstraintMap.mem key constraints then
       let current_set = ConstraintMap.find key constraints in (* cannot throw *)
-      TileSet.add destination_tile current_set
+      Tileset.add destination_tile current_set
     else
-      TileSet.singleton destination_tile
+      Tileset.singleton destination_tile
   in ConstraintMap.add key new_set constraints
 
 let of_tilemap tilemap =
@@ -47,7 +45,7 @@ let print grid =
   let print_binding binding =
     print_string (ConstraintKey.to_string (fst binding));
     let tileset = snd binding in
-    let elements = TileSet.elements tileset in
+    let elements = Tileset.elements tileset in
     List.map Tile.to_string elements |> List.iter print_string;
     print_string "\n"
   in
