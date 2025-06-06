@@ -44,3 +44,8 @@ let to_string = function
   | SnowBottomLeft -> "SnowBottomLeft"
   | SnowBottomMiddle -> "SnowBottomMiddle"
   | SnowBottomRight -> "SnowBottomRight"
+
+let all = [
+  Air; SnowLayerLeft; SnowLayerMiddle; SnowLayerRight; SnowGroundLeft; SnowGroundMiddle; SnowGroundRight;
+  SnowWallLeft; SnowInner; SnowWallRight; SnowBottomLeft; SnowBottomMiddle; SnowBottomRight
+]
