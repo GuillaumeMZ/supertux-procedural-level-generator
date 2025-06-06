@@ -1,5 +1,5 @@
 type cell =
-  | Uncollapsed of Tile.t list
+  | Uncollapsed of Tileset.t
   | Collapsed of Tile.t
 
 type grid_state =
