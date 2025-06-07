@@ -12,3 +12,5 @@ val of_tilemap: Tile.t Grid.t -> t
 
 (** Prints a constraint map to stdout. *)
 val print: t -> unit
+
+val find_opt: (Tile.t * Direction.t) -> t -> Tileset.t option

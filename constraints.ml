@@ -16,6 +16,7 @@ type t = Tileset.t ConstraintMap.t
 
 let empty (): t = ConstraintMap.empty
 
+(* should be named add *)
 let add_constraint constraints source_tile direction destination_tile =
   let key = (source_tile, direction) in
   let new_set =
@@ -51,3 +52,5 @@ let print grid =
   in
   let bindings = ConstraintMap.bindings grid in
   List.iter print_binding bindings
+
+let find_opt = ConstraintMap.find_opt
