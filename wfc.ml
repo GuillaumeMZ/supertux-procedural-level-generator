@@ -41,3 +41,13 @@ let get_grid_state cell_grid =
       state_keeper current_grid_state (state_of_cell cell)
     ) grid_state (List.init (Grid.width cell_grid) Fun.id)
   ) Finished (List.init (Grid.height cell_grid) Fun.id)
+
+let rec generate_constraints constraint_map target_cell target_direction =
+  match target_cell with
+    | Uncollapsed possibilities -> Tileset.fold (fun possibility acc ->
+        let constraint_set = Constraints.find_opt (possibility, Direction.opposite target_direction) constraint_map in
+        match constraint_set with
+          | Some set -> Tileset.union acc set
+          | None -> acc
+      ) possibilities Tileset.empty
+    | Collapsed tile -> generate_constraints constraint_map (Uncollapsed (Tileset.singleton tile)) target_direction (* quick hack *)
