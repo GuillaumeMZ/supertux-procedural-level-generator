@@ -41,3 +41,13 @@ let to_string = function
   | SouthWest -> "SouthWest"
   | West -> "West"
   | NorthWest -> "NorthWest"
+
+let opposite = function
+  | North -> South
+  | NorthEast -> SouthWest
+  | East -> West
+  | SouthEast -> NorthWest
+  | South -> North
+  | SouthWest -> NorthEast
+  | West -> East
+  | NorthWest -> SouthEast
