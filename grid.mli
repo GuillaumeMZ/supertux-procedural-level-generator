@@ -23,3 +23,8 @@ val get: int -> int -> 'a t -> 'a
 
 (** [get_opt y x grid] returns the contents of the cell at (x; y) wrapped in an option. Returns None if the coordinates are invalid. *)
 val get_opt: int -> int -> 'a t -> 'a option
+
+(** [set grid y x value] sets the cell at (x; y) to [value]. *)
+val set: 'a t -> int -> int -> 'a -> unit
+
+val neighbors_list: 'a t -> int -> int -> (int * int) list

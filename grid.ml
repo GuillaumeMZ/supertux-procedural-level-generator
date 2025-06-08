@@ -38,3 +38,11 @@ let inside y x grid = y >= 0 && y < grid.height && x >= 0 && x < grid.width
 let get y x grid = grid.inner_array.(y * grid.width + x)
 
 let get_opt y x grid = if inside y x grid then Some (grid.inner_array.(y * grid.width + x)) else None
+
+let set grid x y value = grid.inner_array.(y * grid.width + x) <- value
+
+let neighbors_list grid y x =
+     Direction.all
+  |> List.map Direction.to_offset
+  |> List.map (fun (y_offset, x_offset) -> (y + y_offset, x + x_offset))
+  |> List.filter (fun (y, x) -> inside y x grid)
