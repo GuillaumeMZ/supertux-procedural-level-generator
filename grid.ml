@@ -41,8 +41,8 @@ let get_opt y x grid = if inside y x grid then Some (grid.inner_array.(y * grid.
 
 let set grid x y value = grid.inner_array.(y * grid.width + x) <- value
 
-let neighbors_list grid y x =
+let neighbors_list_with_direction grid y x =
      Direction.all
-  |> List.map Direction.to_offset
-  |> List.map (fun (y_offset, x_offset) -> (y + y_offset, x + x_offset))
-  |> List.filter (fun (y, x) -> inside y x grid)
+  |> List.map (fun direction -> (Direction.to_offset direction, direction))
+  |> List.map (fun ((y_offset, x_offset), direction) -> ((y + y_offset, x + x_offset), direction))
+  |> List.filter (fun ((y, x), _) -> inside y x grid)

@@ -27,4 +27,5 @@ val get_opt: int -> int -> 'a t -> 'a option
 (** [set grid y x value] sets the cell at (x; y) to [value]. *)
 val set: 'a t -> int -> int -> 'a -> unit
 
-val neighbors_list: 'a t -> int -> int -> (int * int) list
+(** [neighbors_list_with_direction grid y x] returns a list of the cell at (x; y)'s neighbors coordinates, with the direction relative to the source included. *)
+val neighbors_list_with_direction: 'a t -> int -> int -> ((int * int) * Direction.t) list
