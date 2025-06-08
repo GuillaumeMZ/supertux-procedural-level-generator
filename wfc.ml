@@ -7,7 +7,7 @@ type grid_state =
   | Finished
   | Invalid_cell
 
-let select_most_suitable_uncollapsed_cell cell_grid =
+let select_most_suitable_uncollapsed_cell cell_grid = (* could be more random *)
   let most_suitable_cell ((_, _, count1) as one) ((_, _, count2) as two) =
     if count1 < count2 then one else two
   in
@@ -42,12 +42,46 @@ let get_grid_state cell_grid =
     ) grid_state (List.init (Grid.width cell_grid) Fun.id)
   ) Finished (List.init (Grid.height cell_grid) Fun.id)
 
-let rec generate_constraints constraint_map target_cell target_direction =
-  match target_cell with
-    | Uncollapsed possibilities -> Tileset.fold (fun possibility acc ->
-        let constraint_set = Constraints.find_opt (possibility, Direction.opposite target_direction) constraint_map in
-        match constraint_set with
-          | Some set -> Tileset.union acc set
-          | None -> acc
-      ) possibilities Tileset.empty
-    | Collapsed tile -> generate_constraints constraint_map (Uncollapsed (Tileset.singleton tile)) target_direction (* quick hack *)
+(* Must NOT be called on a collapsed cell. *)
+let generate_constraints constraint_map y x cell_grid =
+  let rec generate_constraints' target_cell target_direction =
+    match target_cell with
+      | Uncollapsed possibilities -> Tileset.fold (fun possibility acc ->
+          let constraint_set = Constraints.find_opt (possibility, Direction.opposite target_direction) constraint_map in
+          match constraint_set with
+            | Some set -> Tileset.union acc set
+            | None -> acc
+        ) possibilities Tileset.empty
+      | Collapsed tile -> generate_constraints' (Uncollapsed (Tileset.singleton tile)) target_direction (* quick hack *)
+  in
+  let new_constraints =
+    Grid.neighbors_list_with_direction cell_grid y x |>
+    List.fold_left (fun tileset ((y_neighbor, x_neighbor), direction) ->
+      Tileset.union tileset (generate_constraints' (Grid.get y_neighbor x_neighbor cell_grid) direction)
+    ) Tileset.empty
+  in
+  match Grid.get y x cell_grid with
+    | Collapsed _ -> failwith "Attempting to build the constraints of a collapsed cell."
+    | Uncollapsed _ -> new_constraints 
+
+let collapse cell_grid y x =
+  let cell = Grid.get y x cell_grid in
+  match cell with
+    | Collapsed _ -> failwith "Attempting to collapse an already collapsed cell."
+    | Uncollapsed possibilities ->
+        let selected_possibility = Tileset.choose_opt possibilities in (* is it random enough ? probably not, my implementation just calls min_elt_opt *)
+        match selected_possibility with
+          | Some tile -> Grid.set cell_grid y x (Collapsed tile)
+          | None -> failwith "Attempting to collapse an invalid cell."
+
+let rec propagate_constraints constraint_map y x cell_grid =
+  Grid.neighbors_list_with_direction cell_grid y x |>
+  List.iter (fun ((y_neighbor, x_neighbor), _) ->
+    let neighbor = Grid.get y_neighbor x_neighbor cell_grid in
+    match neighbor with
+      | Collapsed _ -> ()
+      | Uncollapsed possibilities ->
+          let new_possibilities = generate_constraints constraint_map y x cell_grid in
+          if Tileset.equal possibilities new_possibilities then ()
+          else Grid.set cell_grid y x (Uncollapsed new_possibilities); propagate_constraints constraint_map y_neighbor x_neighbor cell_grid
+  )
