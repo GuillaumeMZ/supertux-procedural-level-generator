@@ -16,8 +16,9 @@ let select_most_suitable_uncollapsed_cell cell_grid = (* could be more random *)
       List.fold_left (fun best_so_far x ->
         let current = Grid.get y x cell_grid in
         match current with
-          (* what if an uncollapsed cell exists but with 0 possibilities ? *)
-          | Uncollapsed possibilities -> most_suitable_cell (y, x, Tileset.cardinal possibilities) best_so_far
+          | Uncollapsed possibilities -> 
+              if Tileset.cardinal possibilities = 0 then failwith "Attempting to select the most suitable uncollapsed cell on an invalid grid."
+              else most_suitable_cell (y, x, Tileset.cardinal possibilities) best_so_far
           | _ -> best_so_far
       ) state (List.init (Grid.width cell_grid) Fun.id)
     ) (-1, -1, Int.max_int) (List.init (Grid.height cell_grid) Fun.id)
@@ -64,15 +65,16 @@ let generate_constraints constraint_map y x cell_grid =
     | Collapsed _ -> failwith "Attempting to build the constraints of a collapsed cell."
     | Uncollapsed _ -> new_constraints 
 
+(* Raises Failure if attempting to collapse an invalid cell. *)
 let collapse cell_grid y x =
   let cell = Grid.get y x cell_grid in
   match cell with
     | Collapsed _ -> failwith "Attempting to collapse an already collapsed cell."
     | Uncollapsed possibilities ->
-        let selected_possibility = Tileset.choose_opt possibilities in (* is it random enough ? probably not, my implementation just calls min_elt_opt *)
-        match selected_possibility with
-          | Some tile -> Grid.set cell_grid y x (Collapsed tile)
-          | None -> failwith "Attempting to collapse an invalid cell."
+        let selected_tile =
+          let possibilities_list = Tileset.to_list possibilities in
+          List.nth possibilities_list (Random.int (List.length possibilities_list))
+        in Grid.set cell_grid y x (Collapsed selected_tile)
 
 let rec propagate_constraints constraint_map y x cell_grid =
   Grid.neighbors_list_with_direction cell_grid y x |>
