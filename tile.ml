@@ -15,18 +15,18 @@ type t =
 
 let to_int = function
   | Air -> 0
-  | SnowLayerLeft -> 1
-  | SnowLayerMiddle -> 2
-  | SnowLayerRight -> 3
-  | SnowGroundLeft -> 4
-  | SnowGroundMiddle -> 5
-  | SnowGroundRight -> 6
-  | SnowWallLeft -> 7
-  | SnowInner -> 8
-  | SnowWallRight -> 9
-  | SnowBottomLeft -> 10
-  | SnowBottomMiddle -> 11
-  | SnowBottomRight -> 12
+  | SnowLayerLeft -> 7
+  | SnowLayerMiddle -> 8
+  | SnowLayerRight -> 9
+  | SnowGroundLeft -> 13
+  | SnowGroundMiddle -> 14
+  | SnowGroundRight -> 15
+  | SnowWallLeft -> 10
+  | SnowInner -> 11
+  | SnowWallRight -> 12
+  | SnowBottomLeft -> 16
+  | SnowBottomMiddle -> 17
+  | SnowBottomRight -> 18
 
 let compare tile1 tile2 = Int.compare (to_int tile1) (to_int tile2)
 
