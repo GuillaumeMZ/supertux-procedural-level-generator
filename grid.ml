@@ -39,7 +39,7 @@ let get y x grid = grid.inner_array.(y * grid.width + x)
 
 let get_opt y x grid = if inside y x grid then Some (grid.inner_array.(y * grid.width + x)) else None
 
-let set grid x y value = grid.inner_array.(y * grid.width + x) <- value
+let set grid y x value = grid.inner_array.(y * grid.width + x) <- value
 
 let neighbors_list_with_direction grid y x =
      Direction.all
