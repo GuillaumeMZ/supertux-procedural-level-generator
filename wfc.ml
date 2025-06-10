@@ -83,7 +83,7 @@ let rec propagate_constraints constraint_map y x cell_grid =
     match neighbor with
       | Collapsed _ -> ()
       | Uncollapsed possibilities ->
-          let new_possibilities = generate_constraints constraint_map y x cell_grid in
+          let new_possibilities = generate_constraints constraint_map y_neighbor x_neighbor cell_grid in
           if Tileset.equal possibilities new_possibilities then ()
-          else Grid.set cell_grid y x (Uncollapsed new_possibilities); propagate_constraints constraint_map y_neighbor x_neighbor cell_grid
+          else Grid.set cell_grid y_neighbor x_neighbor (Uncollapsed new_possibilities); propagate_constraints constraint_map y_neighbor x_neighbor cell_grid
   )
