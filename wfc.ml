@@ -44,7 +44,7 @@ let get_grid_state cell_grid =
   ) Finished (List.init (Grid.height cell_grid) Fun.id)
 
 (* Must NOT be called on a collapsed cell. *)
-let generate_constraints constraint_map y x cell_grid =
+let generate_constraints constraint_map all_tiles y x cell_grid =
   let rec generate_constraints' target_cell target_direction =
     match target_cell with
       | Uncollapsed possibilities -> Tileset.fold (fun possibility acc ->
@@ -59,7 +59,7 @@ let generate_constraints constraint_map y x cell_grid =
     Grid.neighbors_list_with_direction cell_grid y x |>
     List.fold_left (fun tileset ((y_neighbor, x_neighbor), direction) ->
       Tileset.inter tileset (generate_constraints' (Grid.get y_neighbor x_neighbor cell_grid) direction)
-    ) Tileset.all
+    ) all_tiles
   in
   match Grid.get y x cell_grid with
     | Collapsed _ -> failwith "Attempting to build the constraints of a collapsed cell."
@@ -76,17 +76,17 @@ let collapse cell_grid y x =
           List.nth possibilities_list (Random.int (List.length possibilities_list))
         in Grid.set cell_grid y x (Collapsed selected_tile)
 
-let rec propagate_constraints constraint_map y x cell_grid =
+let rec propagate_constraints constraint_map all_tiles y x cell_grid =
   Grid.neighbors_list_with_direction cell_grid y x |>
   List.iter (fun ((y_neighbor, x_neighbor), _) ->
     let neighbor = Grid.get y_neighbor x_neighbor cell_grid in
     match neighbor with
       | Collapsed _ -> ()
       | Uncollapsed possibilities ->
-          let new_possibilities = generate_constraints constraint_map y_neighbor x_neighbor cell_grid in
+          let new_possibilities = generate_constraints constraint_map all_tiles y_neighbor x_neighbor cell_grid in
           if Tileset.equal possibilities new_possibilities then ()
           else begin
             Grid.set cell_grid y_neighbor x_neighbor (Uncollapsed new_possibilities); 
-            propagate_constraints constraint_map y_neighbor x_neighbor cell_grid
+            propagate_constraints constraint_map all_tiles y_neighbor x_neighbor cell_grid
           end
   )

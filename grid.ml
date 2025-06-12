@@ -46,3 +46,10 @@ let neighbors_list_with_direction grid y x =
   |> List.map (fun direction -> (Direction.to_offset direction, direction))
   |> List.map (fun ((y_offset, x_offset), direction) -> ((y + y_offset, x + x_offset), direction))
   |> List.filter (fun ((y, x), _) -> inside y x grid)
+
+let fold_yx grid f initial_acc =
+  List.fold_left (fun acc y ->
+      List.fold_left (fun acc' x ->
+        f y x (get y x grid) acc'
+      ) acc (List.init (width grid) Fun.id)
+  ) initial_acc (List.init (height grid) Fun.id)

@@ -3,7 +3,7 @@ let cell_grid_to_string cell_grid =
     let current_line = List.fold_left (fun line x ->
       match Grid.get y x cell_grid with
       | Wfc.Uncollapsed _ -> failwith "Attempting to convert an uncollapsed cell to a string."
-      | Wfc.Collapsed tile -> line ^ " " ^ (Tile.to_int tile |> string_of_int)
+      | Wfc.Collapsed tile -> line ^ " " ^ (string_of_int tile)
     ) block (List.init (Grid.width cell_grid) Fun.id)
     in current_line ^ "\n"
   ) "" (List.init (Grid.height cell_grid) Fun.id)

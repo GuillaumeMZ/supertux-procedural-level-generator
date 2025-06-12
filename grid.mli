@@ -29,3 +29,5 @@ val set: 'a t -> int -> int -> 'a -> unit
 
 (** [neighbors_list_with_direction grid y x] returns a list of the cell at (x; y)'s neighbors coordinates, with the direction relative to the source included. *)
 val neighbors_list_with_direction: 'a t -> int -> int -> ((int * int) * Direction.t) list
+
+val fold_yx: 'a t -> (int -> int -> 'a -> 'b -> 'b) -> 'b -> 'b

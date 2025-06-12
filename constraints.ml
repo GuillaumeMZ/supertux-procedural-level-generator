@@ -5,9 +5,6 @@ module ConstraintKey = struct
     let tile_comparison = Tile.compare (fst t1) (fst t2) in
     if tile_comparison <> 0 then tile_comparison else
     Direction.compare (snd t1) (snd t2)
-
-  let to_string key =
-    "(" ^ (Tile.to_string (fst key)) ^ ", " ^ Direction.to_string (snd key) ^ ")"
 end
 
 module ConstraintMap = Map.Make(ConstraintKey)
@@ -42,15 +39,5 @@ let of_tilemap tilemap =
     ) state (List.init (Grid.width tilemap) Fun.id)
   ) ConstraintMap.empty (List.init (Grid.height tilemap) Fun.id)
 
-let print grid =
-  let print_binding binding =
-    print_string (ConstraintKey.to_string (fst binding));
-    let tileset = snd binding in
-    let elements = Tileset.elements tileset in
-    List.map Tile.to_string elements |> List.iter print_string;
-    print_string "\n"
-  in
-  let bindings = ConstraintMap.bindings grid in
-  List.iter print_binding bindings
 
 let find_opt = ConstraintMap.find_opt
