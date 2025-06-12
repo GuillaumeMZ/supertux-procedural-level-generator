@@ -58,8 +58,8 @@ let generate_constraints constraint_map y x cell_grid =
   let new_constraints =
     Grid.neighbors_list_with_direction cell_grid y x |>
     List.fold_left (fun tileset ((y_neighbor, x_neighbor), direction) ->
-      Tileset.union tileset (generate_constraints' (Grid.get y_neighbor x_neighbor cell_grid) direction)
-    ) Tileset.empty
+      Tileset.inter tileset (generate_constraints' (Grid.get y_neighbor x_neighbor cell_grid) direction)
+    ) Tileset.all
   in
   match Grid.get y x cell_grid with
     | Collapsed _ -> failwith "Attempting to build the constraints of a collapsed cell."
