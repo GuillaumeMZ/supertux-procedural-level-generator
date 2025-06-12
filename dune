@@ -1,3 +1,4 @@
 (executable
  (name splg)
- (modules splg grid tile direction constraints wfc tileset))
+ (modes byte exe)
+ (modules splg grid tile direction constraints wfc tileset level_serializer))

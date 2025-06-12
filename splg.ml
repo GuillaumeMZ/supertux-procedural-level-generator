@@ -12,7 +12,7 @@ let () =
     [| Air; Air; Air; Air; Air |];
   |] in
   let constraint_map = Constraints.of_tilemap tilemap in
-  let wfc_grid = Grid.make 15 15 (Uncollapsed Tileset.all) in 
+  let wfc_grid = Grid.make 30 60 (Uncollapsed Tileset.all) in 
   let rec wave_function_collapse () =
     let min_entropy_cell = select_most_suitable_uncollapsed_cell wfc_grid in
     (match min_entropy_cell with
@@ -24,4 +24,4 @@ let () =
     match get_grid_state wfc_grid with
       | Finished | Invalid_cell -> ()
       | In_progress -> wave_function_collapse ()
-  in wave_function_collapse (); print_collapsed_grid wfc_grid
+  in wave_function_collapse (); Level_serializer.serialize_level wfc_grid "./level1.stl"
