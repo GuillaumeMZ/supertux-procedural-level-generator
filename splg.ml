@@ -2,14 +2,7 @@ open Wfc
 
 let () =
   Random.self_init ();
-  let tilemap = Grid.of_array_of_arrays [|
-    [| 0; 0;  0;  0;  0 |];
-    [| 0; 7;  8;  9;  0 |];
-    [| 0; 13; 14; 15; 0 |];
-    [| 0; 10; 11; 12; 0 |];
-    [| 0; 16; 17; 18; 0 |];
-    [| 0; 0;  0;  0;  0 |];
-  |] in
+  let tilemap = Tilemap.of_file "input.txt" in
   let constraint_map = Constraints.of_tilemap tilemap in
   let all_tiles = Tileset.of_tilemap tilemap in
   let wfc_grid = Grid.make 30 60 (Uncollapsed all_tiles) in 
