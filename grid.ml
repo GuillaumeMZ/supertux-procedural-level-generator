@@ -4,11 +4,6 @@ type 'a t = {
   height: int;
 }
 
-(* let get_1d_of_2d grid y x = y * grid.width + x
-
-(** Returns (y, x) *)
-let get_2d_of_1d grid i = (i / grid.width, i mod grid.width) *)
-
 let init height width init_fn =
   let inner_size = height * width in
   let init_fn' i =
