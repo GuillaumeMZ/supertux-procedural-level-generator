@@ -7,11 +7,16 @@ This is a procedural level generator for SuperTux 2, using the [wave function co
 ## How to compile
 
 * Download and install [Opam](https://opam.ocaml.org/) with your distribution's package manager.
+* If not already done, initialize Opam:
+
+    ```bash
+    opam init
+    ```
+
 * Install the OCaml compiler and [Dune](https://dune.build/) using Opam:
 
     ```bash
-    opam install ocaml
-    opam install dune
+    opam install ocaml dune
     ```
 
 * Clone this repository and open a terminal inside the root folder
